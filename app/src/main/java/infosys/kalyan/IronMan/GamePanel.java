@@ -65,9 +65,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 retry = false;
                 thread = null;
             }catch(InterruptedException e){e.printStackTrace();}
-
         }
-
     }
 
     @Override
@@ -136,8 +134,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             }
 
             if(brickFall==null){
-                brickFall=new BrickFall(BitmapFactory.decodeResource(getResources(),R.drawable.brick),997,0,100,2);
+                Random rand = new Random();
+                int random = rand.nextInt(2) + 1;
+                int random1 = rand.nextInt(40) + 1;
+                brickFall=new BrickFall(BitmapFactory.decodeResource(getResources(),R.drawable.brick),997,0,90+random1,random);
             }else{
+                if(collision(brickFall,player)){
+                    player.setPlaying(false);
+                }
                 if(brickFall.getY()>=561 || brickFall.getX()<=-20){
                     brickFall=null;
                 }else{
@@ -238,7 +242,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
             if(endTime!=0) {
                 long elapsed = (System.nanoTime() - endTime)/1000000;
-                if (elapsed > 4000) {
+                if (elapsed > 500) {
                     if(preferences.getInt("Score",0)<best){
                         editor.putInt("Score", best);
                         editor.commit();
@@ -252,7 +256,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             //Eaten by mummies
 
             long elapsed = (System.nanoTime() - endTime)/1000000;
-            if (elapsed > 4000) {
+            if (elapsed > 500) {
                 if(preferences.getInt("Score",0)<best){
                     editor.putInt("Score", best);
                     editor.commit();
