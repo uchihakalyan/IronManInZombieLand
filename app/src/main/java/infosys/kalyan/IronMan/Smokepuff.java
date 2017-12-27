@@ -1,0 +1,31 @@
+package infosys.kalyan.IronMan;
+
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+
+public class Smokepuff extends GameObject{
+    public int r;
+    
+    public Smokepuff(int x, int y)
+    {
+        r = 6;
+        super.x = x;
+        super.y = y;
+    }
+    public void update()
+    {
+        x-=10;
+    }
+    public void draw(Canvas canvas)
+    {
+        Paint paint = new Paint();
+        paint.setColor(Color.GRAY);
+        paint.setStyle(Paint.Style.FILL);
+
+        canvas.drawCircle(x-r, y-r, r, paint);
+        canvas.drawCircle(x-r+3, y-r-3,r,paint);
+        canvas.drawCircle(x-r+5, y-r+2, r, paint);
+    }
+
+}
